@@ -1,5 +1,10 @@
 # image-builder-debugging
 
+- [Image builder Proxmox usage docs](https://image-builder.sigs.k8s.io/capi/providers/proxmox)
+- [Using a container for proxmox image builder builds docs](https://github.com/kubernetes-sigs/image-builder/blob/main/docs/book/src/capi/container-image.md)
+
+  - There is a section in here for proxmox but it doesn't have a link.
+
 - Clone the image builder repository locally
 
 ```bash
@@ -8,6 +13,7 @@ cd image-builder
 ```
 
 - Create the `proxmox.env` file with the following contents. Make sure to not use quotes or the container will not execute properly.
+
 ```bash
 PROXMOX_URL=https://<pve-endpoint>:8006/api2/json
 PROXMOX_USERNAME="proxmox-user"
@@ -18,7 +24,9 @@ PROXMOX_BRIDGE=vmbr0
 PROXMOX_STORAGE_POOL=your-vm-storage-pool
 PACKER_FLAGS=--var 'vmid=24013201' --var 'disk_format=raw' --var 'kubernetes_rpm_version=1.32.1' --var 'kubernetes_semver=v1.32.1' --var 'kubernetes_series=v1.32' --var 'kubernetes_deb_version=1.32.1-1.1'
 ```
+
 - Run the container like so to build the image:
+
 ```bash
 docker run -it --rm --net=host --env-file proxmox.env \
   -v /tmp:/<your-path-here>/image-builder/images/capi/downloaded_iso_path \
